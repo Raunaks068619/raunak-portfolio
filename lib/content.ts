@@ -9,6 +9,8 @@ export const profile = {
   org: "Fynd · Zenith Intelligence Platform",
   location: "Mumbai, India",
   email: "raunaksingh@gofynd.com",
+  photo: "/media/raunak.jpg",
+  years: "3+ years",
   // The line that has to land in the first second.
   statement: {
     lead: "I build AI-native systems,",
@@ -28,9 +30,9 @@ export const profile = {
 
 export const metrics: { value: string; label: string }[] = [
   { value: "36k+", label: "clickstream events recovered" },
-  { value: "24", label: "microservices bootstrapped by one command" },
+  { value: "₹3L/mo", label: "infra cost removed at Fynd" },
+  { value: "1000+", label: "sales channels the rec engine serves" },
   { value: "142k", label: "words dictated by voice, into my own app" },
-  { value: "37", label: "public repos and counting" },
 ];
 
 /* ---------------------------------------------------------------- Fynd work */
@@ -64,30 +66,31 @@ export const fyndWork: WorkItem[] = [
       "The single command that turns a fresh laptop into a running copy of a 24-service monorepo, and the one that ships it.",
     points: [
       "One command bootstraps the whole stack: installs and wires up everything needed to run locally.",
-      "One command drives Jenkins deploys across environments.",
-      "Removes the onboarding tax that 24 microservices usually charge a new engineer.",
+      "One command drives Jenkins deploys across environments (Playwright + Chrome CDP).",
+      "Exposed it as an MCP/Skill control plane, so AI agents self-bootstrap service context, plans, and startup.",
     ],
   },
   {
     no: "03",
-    title: "Fynd Recommendations Extension",
+    title: "Product Recommendation Extension",
     role: "Owner",
     summary:
-      "The extension powering every storefront recommendation surface, with three specialised strategies layered on the base engine.",
+      "The ML-powered engine (Vertex AI, Redis, Postgres, Mongo) powering every storefront recommendation surface across 1000+ sales channels, with currency and locale-aware caching.",
     points: [
-      "RankBoost: placement-slug routing and boost scoring, with rank-stamping decoupled from array position.",
-      "Recently Viewed: a local-first localStorage flow with a clean BigQuery fallback for the login merge.",
-      "Brand Diversity: a fairness layer across surfaced products, with 670+ lines of TDD across boost, rank, and recency.",
+      "Scaled to 9+ recommendation types (similar, trending, frequently-bought-together, cross-sell, personalised, local-first recently-viewed) with request-time RankBoost and brand-diversity controls.",
+      "Replaced third-party catalog ingestion with an internal GCS workflow, cutting roughly ₹3L per month and a hard external dependency.",
+      "Added a gpt-4o-mini category-intelligence layer, plus 670+ lines of TDD across boost, rank, and recency.",
     ],
   },
   {
     no: "04",
     title: "Smart Suggestions, Zenith-driven insights",
-    role: "Built",
+    role: "Architected",
     summary:
-      "Per-company actions mined from the Zenith warehouse and handed back to merchants as concrete next steps.",
+      "Per-company actions mined from the Zenith warehouse and handed back to merchants as concrete next steps, with OpenAI on Cloud Run behind a deterministic rule-based fallback and full audit tracking.",
     points: [
-      "Suggests promotions, collections, and product-description updates from real warehouse signals.",
+      "Maps analytics signals to actionable promotions, collections, and product-description updates via conditional API orchestration.",
+      "Cut analytical API latency from 30 to 60 seconds down to milliseconds with a BigQuery to Postgres hybrid, plus an NLP-to-SQL reporting engine with scheduled email delivery.",
       "Festival-aware ad-push recommendations that schedule themselves for the right moment.",
     ],
   },
@@ -97,9 +100,13 @@ export const fyndWork: WorkItem[] = [
 
 export type FieldNote = { problem: string; fix: string };
 
+export type Shot = { src: string; alt: string; caption: string; dark?: boolean };
+
 export type Project = {
   slug: string;
   name: string;
+  role: string;
+  mark: string;
   tagline: string;
   status: { label: string; live: boolean };
   href: string;
@@ -107,6 +114,7 @@ export type Project = {
   secondary?: { href: string; label: string };
   what: string;
   stack: string[];
+  shots: Shot[];
   notesTitle: string;
   notes: FieldNote[];
 };
@@ -115,6 +123,8 @@ export const projects: Project[] = [
   {
     slug: "bookmarx",
     name: "Bookmarx",
+    role: "Co-founder",
+    mark: "/media/bookmarx-mark.png",
     tagline: "A passive brain for your X bookmarks.",
     status: { label: "Live", live: true },
     href: "https://bookmarx.co",
@@ -122,6 +132,18 @@ export const projects: Project[] = [
     secondary: { href: "https://github.com/Raunaks068619", label: "GitHub" },
     what:
       "You save ideas on X and never come back to them. Bookmarx syncs your bookmarks, enriches each one with an AI summary and tags, and lets you chat with everything you saved, get scheduled digests, and turn a thread into a slide deck. A Next.js 16 PWA with offline support and push.",
+    shots: [
+      {
+        src: "/media/bookmarx-chat.png",
+        alt: "Bookmarx chat: asking Brainy for the key insight from a saved post",
+        caption: "Chat with everything you saved",
+      },
+      {
+        src: "/media/bookmarx-summaries.png",
+        alt: "Bookmarx generating a summary of the last 10 bookmarks",
+        caption: "Summaries and decks on demand",
+      },
+    ],
     stack: [
       "Next.js 16",
       "React 19",
@@ -163,16 +185,18 @@ export const projects: Project[] = [
   {
     slug: "vordi",
     name: "Vordi",
+    role: "Founder",
+    mark: "/media/vordi-mark.png",
     tagline: "Voice to text that remembers.",
-    status: { label: "Building in public", live: true },
-    href: "https://github.com/Raunaks068619/Vordi",
-    hrefLabel: "GitHub",
+    status: { label: "Live", live: true },
+    href: "https://vordi.site",
+    hrefLabel: "vordi.site",
     secondary: {
-      href: "https://github.com/Raunaks068619/homebrew-vordi",
-      label: "Homebrew tap",
+      href: "https://github.com/Raunaks068619/Vordi",
+      label: "GitHub",
     },
     what:
-      "A local-first macOS dictation app written in pure Swift and SwiftUI, no Electron. It types by voice into any app, then keeps a private, on-device memory of everything you said so you can search it and ask it questions later. I have dictated 142,000 words through it.",
+      "A free, open-source macOS voice-typing app, my answer to WisprFlow and Superwhisper. Hold fn, speak into any app, and a Dynamic Notch streams your speech through Groq, OpenAI, or a local Whisper, then cleans and rewrites it before injecting the text. Pure Swift and SwiftUI, no Electron. It also keeps a private, on-device memory of everything you said. I have dictated 142,000 words through it.",
     stack: [
       "Swift",
       "SwiftUI",
@@ -181,6 +205,20 @@ export const projects: Project[] = [
       "CoreML",
       "SQLite FTS5",
       "Local LLMs",
+    ],
+    shots: [
+      {
+        src: "/media/vordi-memory.png",
+        alt: "Vordi memory panel showing 316 memories, 201 entities, and a knowledge graph",
+        caption: "On-device memory and knowledge graph",
+        dark: true,
+      },
+      {
+        src: "/media/vordi-transcriptions.png",
+        alt: "Vordi transcriptions panel listing past dictations",
+        caption: "Every dictation, transcribed and searchable",
+        dark: true,
+      },
     ],
     notesTitle: "Field notes from the build",
     notes: [
@@ -218,6 +256,7 @@ export const sideProject = {
   tagline: "A taste-engine for Claude Code.",
   href: "https://github.com/Raunaks068619/design-taste",
   hrefLabel: "github.com/Raunaks068619/design-taste",
+  image: "/media/design-taste-og.png",
   what:
     "AI writes good code and mediocre design. design-taste is the system I built over a few months to fix that: my preferences on spacing, color, and type, encoded as craft principles an agent can actually follow. Open source.",
 };
@@ -230,6 +269,8 @@ export type Post = {
   blurb: string;
   href: string;
   tag: string;
+  platform: string;
+  thumb: { kind: "ledger" | "graph" | "browser" | "image"; src?: string };
 };
 
 export const writingIntro =
@@ -243,6 +284,8 @@ export const posts: Post[] = [
       "Sessions are JSONL conversation trees, messages link by parent UUID, tool outputs sit beside the conversation, and edits become versioned artifacts. It reads less like a chatbot and more like Git, event sourcing, and an IDE runtime combined.",
     href: "https://www.linkedin.com/posts/raunak-singh-608051218_how-claude-stores-context-ugcPost-7459494258400575488-Icip/",
     tag: "Architecture",
+    platform: "LinkedIn",
+    thumb: { kind: "ledger" },
   },
   {
     title: "Reverse engineering AI agent internals",
@@ -251,6 +294,8 @@ export const posts: Post[] = [
       "Claude and Codex are elegant: JSONL ledgers, SQLite indexes, worktrees, shell snapshots. Antigravity is something else, closer to an autonomous browser OS. The pattern: agents are quietly becoming IDEs, browsers, memory systems, and operating environments.",
     href: "https://www.linkedin.com/posts/raunak-singh-608051218_reverse-engineering-ai-agent-internals-ugcPost-7458778510132891648-3cV5/",
     tag: "AI internals",
+    platform: "LinkedIn",
+    thumb: { kind: "graph" },
   },
   {
     title: "Antigravity stores environments, not conversations",
@@ -259,6 +304,8 @@ export const posts: Post[] = [
       "DOM snapshots, browser recordings, WebP playback artifacts, task brains, walkthrough memories. It does not just store what was said. It stores the whole environment it was said in.",
     href: "https://www.linkedin.com/posts/raunak-singh-608051218_antigravity-ugcPost-7461659365780025344-t3zk/",
     tag: "AI internals",
+    platform: "LinkedIn",
+    thumb: { kind: "browser" },
   },
   {
     title: "AI writes code. It is still figuring out design.",
@@ -267,6 +314,8 @@ export const posts: Post[] = [
       "A few months of encoding my own preferences on spacing, color, and type into something an agent can follow. Most design systems add iteration loops instead of removing them. This one tries to remove them.",
     href: "https://www.linkedin.com/posts/raunak-singh-608051218_design-aitools-sideprojects-share-7464260847507447809-81ri/",
     tag: "Design + AI",
+    platform: "LinkedIn",
+    thumb: { kind: "image", src: "/media/design-taste-og.png" },
   },
 ];
 

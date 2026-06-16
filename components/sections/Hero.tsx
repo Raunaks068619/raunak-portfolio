@@ -15,6 +15,8 @@ export default function Hero() {
       />
 
       <div className="relative mx-auto max-w-6xl px-6 lg:px-10">
+        <div className="flex flex-col-reverse gap-9 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
+          <div className="min-w-0">
         <p className="reveal mono flex items-center gap-2.5 text-[12.5px] text-ink-faint">
           <span className="livedot inline-block h-[7px] w-[7px] rounded-full bg-ember" />
           SDE at Fynd · Zenith Intelligence Platform · Mumbai
@@ -76,6 +78,19 @@ export default function Hero() {
           >
             One-pager, PDF
           </a>
+        </div>
+          </div>
+
+          <div className="reveal lg:shrink-0 lg:pt-1.5">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={profile.photo}
+              alt="Raunak Singh"
+              width={184}
+              height={184}
+              className="h-28 w-28 rounded-2xl border border-line object-cover shadow-md ring-1 ring-purple/15 sm:h-32 sm:w-32 lg:h-44 lg:w-44"
+            />
+          </div>
         </div>
 
         {/* the receipts: editorial data row, hairline-separated, no stat cards */}

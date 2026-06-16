@@ -107,6 +107,7 @@ const personLd = {
       name: "Raunak Singh",
       alternateName: "Raunak",
       url: siteUrl,
+      image: `${siteUrl}/media/raunak.jpg`,
       jobTitle: "Software Development Engineer",
       worksFor: {
         "@type": "Organization",

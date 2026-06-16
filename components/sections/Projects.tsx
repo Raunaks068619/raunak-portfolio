@@ -15,51 +15,57 @@ export default function Projects() {
         {projects.map((p, idx) => (
           <article key={p.slug} className="reveal">
             {/* header */}
-            <div className="flex flex-wrap items-start justify-between gap-x-8 gap-y-4">
-              <div>
-                <div className="flex items-center gap-3">
-                  <span className="mono text-[12px] text-ink-faint">P-0{idx + 1}</span>
-                  <span
-                    className={`mono inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] ${
-                      p.status.live
-                        ? "border-ember/40 text-ember"
-                        : "border-line text-ink-faint"
-                    }`}
-                  >
-                    <span
-                      className={`h-[6px] w-[6px] rounded-full ${
-                        p.status.live ? "bg-ember" : "bg-purple"
-                      }`}
-                    />
-                    {p.status.label}
-                  </span>
-                </div>
-                <h3 className="mt-3 text-[2rem] font-semibold tracking-[-0.02em] text-ink sm:text-[2.5rem]">
-                  {p.name}
-                </h3>
-                <p className="serif mt-1 text-[1.25rem] text-purple-deep">{p.tagline}</p>
-              </div>
-
-              <div className="flex flex-col items-start gap-2 sm:items-end">
-                <a
-                  href={p.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-1.5 text-[14px] font-medium text-ink transition-colors hover:text-purple-deep"
-                >
-                  <span className="ulink">{p.hrefLabel}</span>
-                  <ArrowUpRight className="opacity-50 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" width={14} height={14} />
-                </a>
-                {p.secondary && (
+            <div className="flex items-start gap-4 sm:gap-5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={p.mark}
+                alt={`${p.name} app icon`}
+                width={56}
+                height={56}
+                className="h-12 w-12 shrink-0 rounded-2xl border border-line shadow-sm sm:h-14 sm:w-14"
+              />
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                  <h3 className="text-[1.85rem] font-semibold tracking-[-0.02em] text-ink sm:text-[2.35rem]">
+                    {p.name}
+                  </h3>
                   <a
-                    href={p.secondary.href}
+                    href={p.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mono text-[12px] text-ink-faint transition-colors hover:text-ink"
+                    className="group inline-flex items-center gap-1.5 rounded-full bg-purple px-3.5 py-1.5 text-[12.5px] font-medium text-paper shadow-sm transition-transform hover:-translate-y-px"
                   >
-                    {p.secondary.label}
+                    {p.hrefLabel}
+                    <ArrowUpRight
+                      width={13}
+                      height={13}
+                      className="opacity-90 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    />
                   </a>
-                )}
+                  {p.secondary && (
+                    <a
+                      href={p.secondary.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mono inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-[12px] text-ink-soft transition-colors hover:border-ink hover:text-ink"
+                    >
+                      {p.secondary.label}
+                    </a>
+                  )}
+                </div>
+                <p className="serif mt-1.5 text-[1.2rem] text-purple-deep sm:text-[1.3rem]">
+                  {p.tagline}
+                </p>
+                <div className="mono mt-2.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[11.5px] text-ink-faint">
+                  <span>P-0{idx + 1}</span>
+                  <span aria-hidden>·</span>
+                  <span className={`inline-flex items-center gap-1.5 ${p.status.live ? "text-ember" : ""}`}>
+                    <span className={`h-[6px] w-[6px] rounded-full ${p.status.live ? "bg-ember" : "bg-purple"}`} />
+                    {p.status.label}
+                  </span>
+                  <span aria-hidden>·</span>
+                  <span className="uppercase tracking-[0.1em]">{p.role}</span>
+                </div>
               </div>
             </div>
 
@@ -79,6 +85,30 @@ export default function Projects() {
                 </li>
               ))}
             </ul>
+
+            {/* product shots, straight from the landing page */}
+            <div className="mt-9 grid gap-4 sm:grid-cols-2">
+              {p.shots.map((s) => (
+                <figure
+                  key={s.src}
+                  className="overflow-hidden rounded-xl border border-line bg-paper-2"
+                >
+                  <div className="flex items-center justify-center p-4">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={s.src}
+                      alt={s.alt}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full rounded-md"
+                    />
+                  </div>
+                  <figcaption className="mono border-t border-line px-3.5 py-2.5 text-[11px] text-ink-faint">
+                    {s.caption}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
 
             {/* engineering log */}
             <div className="mt-12">
@@ -116,30 +146,45 @@ export default function Projects() {
       </div>
 
       {/* smaller third project */}
-      <div className="reveal mt-20 border-t border-line pt-8">
-        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-          <div className="flex items-baseline gap-3">
+      <div className="reveal mt-20 grid gap-8 border-t border-line pt-10 lg:grid-cols-[minmax(0,1fr)_360px]">
+        <div>
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <span className="mono text-[12px] text-ink-faint">P-03</span>
-            <h3 className="text-[1.4rem] font-semibold tracking-[-0.01em] text-ink">
+            <h3 className="text-[1.5rem] font-semibold tracking-[-0.01em] text-ink">
               {sideProject.name}
             </h3>
-            <span className="serif text-[1.05rem] text-purple-deep">
+            <span className="serif text-[1.1rem] text-purple-deep">
               {sideProject.tagline}
             </span>
           </div>
+          <p className="mt-4 max-w-[60ch] text-[1rem] leading-[1.6] text-ink-soft">
+            {sideProject.what}
+          </p>
           <a
             href={sideProject.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-1.5 text-[13px] text-ink transition-colors hover:text-purple-deep"
+            className="group mt-5 inline-flex items-center gap-1.5 text-[13px] text-ink transition-colors hover:text-purple-deep"
           >
             <span className="ulink mono text-[12.5px]">{sideProject.hrefLabel}</span>
             <ArrowUpRight className="opacity-50 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" width={13} height={13} />
           </a>
         </div>
-        <p className="mt-3 max-w-[66ch] text-[1rem] leading-[1.6] text-ink-soft">
-          {sideProject.what}
-        </p>
+        <a
+          href={sideProject.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block overflow-hidden rounded-xl border border-line bg-paper-2 shadow-sm transition-transform hover:-translate-y-0.5"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={sideProject.image}
+            alt="design-taste repository preview on GitHub"
+            loading="lazy"
+            decoding="async"
+            className="w-full"
+          />
+        </a>
       </div>
     </Section>
   );
