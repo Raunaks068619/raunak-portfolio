@@ -9,7 +9,7 @@ import { ArrowUpRight, GithubIcon } from "@/components/ui/icons";
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Featured case studies and every public repo by Raunak Singh — Bookmarx, Vordi, Challengers, design-taste, and more.",
+    "Featured case studies and every public repo by Raunak Singh — Bookmarx, Vordi, Challengers, Scrappling, and more.",
   alternates: { canonical: "/projects" },
 };
 

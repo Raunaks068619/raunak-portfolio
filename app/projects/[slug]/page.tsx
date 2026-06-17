@@ -56,14 +56,21 @@ export default async function CaseStudy({
 
         {/* header */}
         <header className="mt-8 flex items-start gap-4 sm:gap-5">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={p.mark}
-            alt={`${p.name} app icon`}
-            width={60}
-            height={60}
-            className="h-14 w-14 shrink-0 rounded-2xl border border-line shadow-sm"
-          />
+          {p.iconBg === "white" ? (
+            <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl border border-line bg-white shadow-sm">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={p.mark} alt={`${p.name} app icon`} width={40} height={40} className="h-9 w-9" />
+            </span>
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={p.mark}
+              alt={`${p.name} app icon`}
+              width={60}
+              height={60}
+              className="h-14 w-14 shrink-0 rounded-2xl border border-line shadow-sm"
+            />
+          )}
           <div className="min-w-0">
             <h1 className="text-[2.2rem] font-semibold tracking-[-0.02em] text-ink sm:text-[2.8rem]">
               {p.name}

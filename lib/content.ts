@@ -343,6 +343,50 @@ export const projects: Project[] = [
       },
     ],
   },
+  {
+    slug: "scrappling",
+    name: "Scrappling",
+    role: "Built solo",
+    mark: "/media/scrappling-mark.png",
+    tagline: "Paste a URL, get clean data.",
+    status: { label: "Live", live: true },
+    cardSummary:
+      "A stealth web scraper that returns clean JSON and Markdown, even past anti-bot walls.",
+    tags: ["Scraping", "FastAPI", "Agents"],
+    mesh: "radial-gradient(115% 115% at 16% 14%, oklch(0.56 0.16 145), transparent 55%), radial-gradient(100% 100% at 90% 20%, oklch(0.62 0.19 128), transparent 52%), radial-gradient(125% 125% at 72% 108%, oklch(0.3 0.09 150), transparent 60%), oklch(0.24 0.07 150)",
+    iconBg: "white",
+    href: "https://scrappling-ui.vercel.app",
+    hrefLabel: "Live demo",
+    secondary: { href: "https://github.com/Raunaks068619/scrappling-ui", label: "GitHub" },
+    what:
+      "Paste a URL and Scrappling renders it with a stealth fetcher, then hands back clean JSON and Markdown side by side. It is built on Scrapling behind a small FastAPI service, with agent-readable endpoints so AI tools can discover and call it on their own.",
+    systemDesign:
+      "A thin Next.js display client on Vercel proxies to a FastAPI scraper on Boltic, so no Python or headless browser ever runs in the lambda. The backend offers three fetcher tiers: plain HTTP for speed, a Camoufox stealth mode that clears Cloudflare and JS challenges, and a Playwright dynamic mode, and it reuses the launched browser context across requests so only the first cold start pays the boot cost. Every surface, UI and API alike, publishes llms.txt and agents.md so an agent can self-discover and call the scraper.",
+    stack: ["Next.js 15", "FastAPI", "Scrapling", "Camoufox", "Playwright", "Boltic"],
+    preview: { src: "https://scrappling-ui.vercel.app", label: "scrappling-ui.vercel.app" },
+    shots: [],
+    notesTitle: "Field notes from the build",
+    notes: [
+      {
+        problem:
+          "A scrape of a paywalled or login-walled page came back as a clean 200, but the content was just the wall: 'subscribe to read', cookie banners, login prompts. The scraper was treating access-control text as the page.",
+        fix:
+          "Added wall detection that flags auth, paywall, subscribe, and cookie-gate text, labels the result blocked or partial, and returns quality metadata, so a successful status with junk content no longer reads as a win.",
+      },
+      {
+        problem:
+          "The Jina Reader fallback and all the HTML cleanup lived in the frontend, duplicating logic the backend should own and bloating a client that was meant to just display results.",
+        fix:
+          "Moved the fallback and the content-cleaning pipeline into the FastAPI backend, keeping the frontend a thin display client and giving every caller, not just the UI, the cleaned output.",
+      },
+      {
+        problem:
+          "The first stealth or dynamic request booted Chromium from cold, a 10 to 20 second wait, and Vercel's lambda cannot run a headless browser at all.",
+        fix:
+          "Kept the scraping on a Boltic service sized for it (1 vCPU, 1.5 GB, 120s timeout) and reused the launched browser context across requests, so only the first request pays the boot cost while Vercel just proxies.",
+      },
+    ],
+  },
 ];
 
 export function getProject(slug: string): Project | undefined {

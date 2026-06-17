@@ -1,33 +1,21 @@
 import Link from "next/link";
-import { projects, sideProject } from "@/lib/content";
+import { projects } from "@/lib/content";
 import ProjectCard, { type CardData } from "@/components/ui/ProjectCard";
 import { ArrowUpRight } from "@/components/ui/icons";
 
-export const featuredCards: CardData[] = [
-  ...projects.map((p) => ({
-    name: p.name,
-    tagline: p.tagline,
-    cardSummary: p.cardSummary,
-    tags: p.tags,
-    mesh: p.mesh,
-    coverLight: p.coverLight,
-    iconBg: p.iconBg,
-    mark: p.mark,
-    status: p.status,
-    role: p.role,
-    href: `/projects/${p.slug}`,
-  })),
-  {
-    name: sideProject.name,
-    tagline: sideProject.tagline,
-    cardSummary: sideProject.cardSummary,
-    tags: sideProject.tags,
-    mesh: sideProject.mesh,
-    role: "Open source",
-    href: sideProject.href,
-    external: true,
-  },
-];
+export const featuredCards: CardData[] = projects.map((p) => ({
+  name: p.name,
+  tagline: p.tagline,
+  cardSummary: p.cardSummary,
+  tags: p.tags,
+  mesh: p.mesh,
+  coverLight: p.coverLight,
+  iconBg: p.iconBg,
+  mark: p.mark,
+  status: p.status,
+  role: p.role,
+  href: `/projects/${p.slug}`,
+}));
 
 export default function Projects() {
   return (
