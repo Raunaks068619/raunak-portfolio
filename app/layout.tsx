@@ -25,7 +25,7 @@ const fraunces = Fraunces({
 });
 
 const description =
-  "Raunak Singh is a full-stack and AI engineer (SDE) at Fynd in Mumbai. He owns a clickstream interceptor that recovered 36k+ events, ships products like Bookmarx and Vordi, and reverse-engineers how AI coding agents store context.";
+  "Raunak Singh is a full-stack and AI engineer (SDE) at Fynd in Mumbai. He cut analytical API latency from 60s to milliseconds, owns the recommendations engine behind 1000+ sales channels, ships products like Bookmarx and Vordi, and reverse-engineers how AI coding agents store context.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
