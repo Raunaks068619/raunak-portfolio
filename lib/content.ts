@@ -97,7 +97,7 @@ export const fyndWork: WorkItem[] = [
 ];
 
 export const currentRole = {
-  logo: "/media/fynd-logo.svg",
+  logo: "/media/fynd-logo.png",
   company: "Fynd",
   legal: "Shopsense Retail Technologies",
   role: "Software Development Engineer",
@@ -153,6 +153,8 @@ export type Project = {
   secondary?: { href: string; label: string };
   what: string;
   stack: string[];
+  /** When set, the project shows a live iframe preview instead of screenshots. */
+  preview?: { src: string; label: string };
   shots: Shot[];
   notesTitle: string;
   notes: FieldNote[];
@@ -245,20 +247,8 @@ export const projects: Project[] = [
       "SQLite FTS5",
       "Local LLMs",
     ],
-    shots: [
-      {
-        src: "/media/vordi-memory.png",
-        alt: "Vordi memory panel showing 316 memories, 201 entities, and a knowledge graph",
-        caption: "On-device memory and knowledge graph",
-        dark: true,
-      },
-      {
-        src: "/media/vordi-transcriptions.png",
-        alt: "Vordi transcriptions panel listing past dictations",
-        caption: "Every dictation, transcribed and searchable",
-        dark: true,
-      },
-    ],
+    preview: { src: "https://vordi.site", label: "vordi.site" },
+    shots: [],
     notesTitle: "Field notes from the build",
     notes: [
       {
@@ -284,6 +274,51 @@ export const projects: Project[] = [
           "Cloud transcription means handing your voice to someone else. Local models mean slow.",
         fix:
           "You bring your own keys for the cloud engines, everything personal stays on-device by default, and local LLMs through LM Studio or Ollama are a first-class fallback, not an afterthought.",
+      },
+    ],
+  },
+  {
+    slug: "challengers",
+    name: "Challengers",
+    role: "Built solo",
+    mark: "/media/challengers-mark.png",
+    tagline: "Push your limits. Bet on yourself.",
+    status: { label: "Live", live: true },
+    href: "https://challengers-theta.vercel.app",
+    hrefLabel: "Live demo",
+    secondary: { href: "https://github.com/Raunaks068619/challengers", label: "GitHub" },
+    what:
+      "A social habit tracker built on friendly competition. Join or create challenges, log every day with photo proof, climb consistency-based leaderboards, and chat with the group in real time. A Next.js 16 PWA with web push and AI-assisted check-in verification.",
+    stack: [
+      "Next.js 16",
+      "TypeScript",
+      "Firebase",
+      "Redis",
+      "Supabase pg_cron",
+      "RTK Query",
+      "Web Push / FCM",
+    ],
+    preview: { src: "https://challengers-theta.vercel.app", label: "challengers-theta.vercel.app" },
+    shots: [],
+    notesTitle: "Field notes from the build",
+    notes: [
+      {
+        problem:
+          "The dashboard fired a separate participant-count query per challenge, an N+1 that scaled Firestore reads with the number of challenges on screen.",
+        fix:
+          "Batched the counts into Firestore 'in' queries so reads stay constant regardless of challenge count, and cached the dashboard for five minutes with RTK Query. O(N) reads became O(1), revisits became instant.",
+      },
+      {
+        problem:
+          "Missed-day penalties read the current points, then subtracted. Two cron runs firing at once could deduct the same day twice.",
+        fix:
+          "Switched the deduction to an atomic increment and computed live points from the document, with an idempotency check against the day's points_history as a backstop. Concurrency-safe by construction.",
+      },
+      {
+        problem:
+          "The app is serverless, but reminders need to fire every minute, and Vercel only runs sub-minute crons on paid plans.",
+        fix:
+          "Drove the schedule from Supabase pg_cron, which uses pg_net to POST the Next.js endpoints with a CRON_SECRET header. Reliable per-minute crons, zero extra infrastructure.",
       },
     ],
   },

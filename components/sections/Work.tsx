@@ -18,7 +18,7 @@ export default function Work() {
           alt={`${currentRole.company} logo`}
           width={56}
           height={56}
-          className="h-12 w-12 shrink-0 rounded-2xl border border-line sm:h-14 sm:w-14"
+          className="h-12 w-12 shrink-0 rounded-2xl border border-line bg-[oklch(0.17_0.02_290)] object-contain p-2.5 sm:h-14 sm:w-14"
         />
         <div className="min-w-0">
           <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">

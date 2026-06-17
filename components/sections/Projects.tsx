@@ -1,12 +1,13 @@
 import { Section } from "@/components/ui/Section";
 import { projects, sideProject } from "@/lib/content";
 import { ArrowUpRight } from "@/components/ui/icons";
+import ProjectPreview from "@/components/ui/ProjectPreview";
 
 export default function Projects() {
   return (
     <Section id="projects" no="02" label="Things I shipped" className="py-24 sm:py-32">
       <p className="reveal max-w-[52ch] text-[1.4rem] font-medium leading-[1.35] tracking-[-0.01em] text-ink sm:text-[1.7rem]">
-        Two products I built after hours, and the{" "}
+        Three things I built after hours, and the{" "}
         <span className="serif pr-[0.06em] text-purple-deep">real problems</span>{" "}
         I hit shipping them.
       </p>
@@ -86,29 +87,33 @@ export default function Projects() {
               ))}
             </ul>
 
-            {/* product shots, straight from the landing page */}
-            <div className="mt-9 grid gap-4 sm:grid-cols-2">
-              {p.shots.map((s) => (
-                <figure
-                  key={s.src}
-                  className="overflow-hidden rounded-xl border border-line bg-paper-2"
-                >
-                  <div className="flex items-center justify-center p-4">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={s.src}
-                      alt={s.alt}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full rounded-md"
-                    />
-                  </div>
-                  <figcaption className="mono border-t border-line px-3.5 py-2.5 text-[11px] text-ink-faint">
-                    {s.caption}
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
+            {/* preview: a live iframe of the landing page, or product shots */}
+            {p.preview ? (
+              <ProjectPreview src={p.preview.src} label={p.preview.label} name={p.name} />
+            ) : (
+              <div className="mt-9 grid gap-4 sm:grid-cols-2">
+                {p.shots.map((s) => (
+                  <figure
+                    key={s.src}
+                    className="overflow-hidden rounded-xl border border-line bg-paper-2"
+                  >
+                    <div className="flex items-center justify-center p-4">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={s.src}
+                        alt={s.alt}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full rounded-md"
+                      />
+                    </div>
+                    <figcaption className="mono border-t border-line px-3.5 py-2.5 text-[11px] text-ink-faint">
+                      {s.caption}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            )}
 
             {/* engineering log */}
             <div className="mt-12">
@@ -149,7 +154,7 @@ export default function Projects() {
       <div className="reveal mt-20 grid gap-8 border-t border-line pt-10 lg:grid-cols-[minmax(0,1fr)_360px]">
         <div>
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <span className="mono text-[12px] text-ink-faint">P-03</span>
+            <span className="mono text-[12px] text-ink-faint">P-04</span>
             <h3 className="text-[1.5rem] font-semibold tracking-[-0.01em] text-ink">
               {sideProject.name}
             </h3>
