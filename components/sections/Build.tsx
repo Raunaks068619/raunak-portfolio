@@ -7,7 +7,7 @@ export default function Build() {
         <div className="grid gap-x-12 gap-y-10 lg:grid-cols-[170px_minmax(0,1fr)]">
           <div className="lg:sticky lg:top-24 lg:h-fit">
             <div className="reveal flex items-baseline gap-3 lg:flex-col lg:items-start lg:gap-2">
-              <span className="mono text-[12px] text-purple-bright">02</span>
+              <span className="mono text-[12px] text-purple-bright">01</span>
               <span className="mono text-[12px] uppercase tracking-[0.18em] text-night-faint">
                 How I build
               </span>

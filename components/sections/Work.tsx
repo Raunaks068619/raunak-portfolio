@@ -1,16 +1,25 @@
-import { Section } from "@/components/ui/Section";
 import { fyndWork, currentRole, earlierRoles } from "@/lib/content";
 import { ArrowUpRight } from "@/components/ui/icons";
 
 export default function Work() {
   return (
-    <Section id="work" no="01" label="Experience" className="py-24 sm:py-32">
+    <section id="work" className="scroll-mt-20 py-24 sm:py-32">
+      <div className="mx-auto max-w-6xl px-6 lg:px-10">
+        <h2 className="reveal text-[clamp(1.9rem,4.5vw,2.7rem)] font-semibold tracking-[-0.02em] text-ink">
+          Experience
+        </h2>
+        <p className="reveal mt-3 max-w-[64ch] text-[1.05rem] leading-[1.6] text-ink-soft">
+          Four-plus years across commerce, lending, and AI. At Fynd I own three
+          product areas end to end: the intelligence platform, the recommendations
+          engine, and a B2B lending product.
+        </p>
+
       {/* current role */}
       <a
         href={currentRole.link}
         target="_blank"
         rel="noopener noreferrer"
-        className="reveal group flex items-center gap-4"
+        className="reveal group mt-12 flex items-center gap-4"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -32,12 +41,6 @@ export default function Work() {
           </p>
         </div>
       </a>
-
-      <p className="reveal mt-9 max-w-[56ch] text-[1.4rem] font-medium leading-[1.35] tracking-[-0.01em] text-ink sm:text-[1.7rem]">
-        Three product areas at Fynd,{" "}
-        <span className="serif pr-[0.04em] text-purple-deep">owned end to end</span>: the
-        intelligence platform, the recommendations engine, and a B2B lending product.
-      </p>
 
       <div className="mt-10">
         {fyndWork.map((item) => (
@@ -123,6 +126,7 @@ export default function Work() {
           ))}
         </div>
       </div>
-    </Section>
+      </div>
+    </section>
   );
 }
