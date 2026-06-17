@@ -18,7 +18,7 @@ export const profile = {
     tail: "the ones I don't.",
   },
   blurb:
-    "Full-stack engineer at Fynd, where I own a clickstream interceptor that recovered 36,000+ events, the developer tooling that bootstraps 24 microservices, and the recommendations engine behind every storefront. After hours I ship products and take apart how AI coding agents actually store context.",
+    "Full-stack engineer at Fynd, where I cut analytical API latency from 30 to 60 seconds down to milliseconds, own the recommendations engine behind 1000+ sales channels, and built Zen CLI for our 24-service monorepo. After hours I ship products and take apart how AI coding agents actually store context.",
   links: {
     github: "https://github.com/Raunaks068619",
     linkedin: "https://www.linkedin.com/in/raunak-singh-608051218/",
@@ -29,7 +29,7 @@ export const profile = {
 } as const;
 
 export const metrics: { value: string; label: string }[] = [
-  { value: "36k+", label: "clickstream events recovered" },
+  { value: "60s → ms", label: "analytical API latency, cut" },
   { value: "₹3L/mo", label: "infra cost removed at Fynd" },
   { value: "1000+", label: "sales channels the rec engine serves" },
   { value: "142k", label: "words dictated by voice, into my own app" },
@@ -48,50 +48,39 @@ export type WorkItem = {
 export const fyndWork: WorkItem[] = [
   {
     no: "01",
-    title: "Avionics, Events Interceptor",
-    role: "Sole owner",
+    title: "Zenith Intelligence AI",
+    role: "Architected & built",
     summary:
-      "The clickstream interceptor for storeOS, Fynd, and Nginx events. Ingest, schema evolution, error triage, and dead-letter recovery, all in one pair of hands.",
+      "The data-to-action layer of the platform: warehouse analytics turned into shipped features, faster reporting, and agent-ready developer tooling.",
     points: [
-      "Wrote the reflow path that recovered 36,000+ schema-invalid events that were otherwise lost.",
-      "Built crash-safe reprocessing on idempotent per-table mutexes backed by BigQuery state.",
-      "Shipping a reflow API to schedule on-demand recovery on Cloud Run and Cloud Scheduler.",
+      "Architected a Smart Suggestions engine mapping analytics signals to actionable promotions and catalog updates via conditional API orchestration; integrated OpenAI on Cloud Run with deterministic rule-based fallback and full audit tracking.",
+      "Reduced analytical API latency from 30 to 60 seconds down to milliseconds via a BigQuery to Postgres hybrid architecture; built an NLP-to-SQL reporting engine with scheduled email delivery and a calendar-style UX.",
+      "Built Zen CLI, an automation CLI unifying local-runtime orchestration for 24+ microservices and one-command Jenkins deployments (Playwright + Chrome CDP); exposed it as an MCP/Skill agent control plane so AI agents self-bootstrap service context, plans, and startup.",
     ],
   },
   {
     no: "02",
-    title: "zen-cli, monorepo developer tooling",
-    role: "Built and maintained",
+    title: "Product Recommendation Extension",
+    role: "Owner",
     summary:
-      "The single command that turns a fresh laptop into a running copy of a 24-service monorepo, and the one that ships it.",
+      "The ML engine behind every storefront recommendation surface, serving 1000+ sales channels.",
     points: [
-      "One command bootstraps the whole stack: installs and wires up everything needed to run locally.",
-      "One command drives Jenkins deploys across environments (Playwright + Chrome CDP).",
-      "Exposed it as an MCP/Skill control plane, so AI agents self-bootstrap service context, plans, and startup.",
+      "Designed an ML-powered recommendation system (Vertex AI, Redis, Postgres, MongoDB) delivering similar, trending, and bought-together results across 1000+ sales channels with currency and locale-aware caching.",
+      "Replaced third-party catalog ingestion with an internal GCS-based workflow, eliminating an external dependency and reducing costs by roughly ₹3L per month.",
+      "Scaled the engine to 9+ recommendation types (similar, trending with category, brand, and gender variants, frequently-bought-together, cross-sell, personalised, local-first recently-viewed) with request-time rank-boost and brand-diversity controls, plus an OpenAI gpt-4o-mini category-intelligence layer.",
     ],
   },
   {
     no: "03",
-    title: "Product Recommendation Extension",
-    role: "Owner",
+    title: "Settle, B2B lending platform",
+    role: "DRI, full-stack",
     summary:
-      "The ML-powered engine (Vertex AI, Redis, Postgres, Mongo) powering every storefront recommendation surface across 1000+ sales channels, with currency and locale-aware caching.",
+      "Drove the lender and merchant panels of a microservice-based fintech lending ecosystem, end to end.",
     points: [
-      "Scaled to 9+ recommendation types (similar, trending, frequently-bought-together, cross-sell, personalised, local-first recently-viewed) with request-time RankBoost and brand-diversity controls.",
-      "Replaced third-party catalog ingestion with an internal GCS workflow, cutting roughly ₹3L per month and a hard external dependency.",
-      "Added a gpt-4o-mini category-intelligence layer, plus 670+ lines of TDD across boost, rank, and recency.",
-    ],
-  },
-  {
-    no: "04",
-    title: "Smart Suggestions, Zenith-driven insights",
-    role: "Architected",
-    summary:
-      "Per-company actions mined from the Zenith warehouse and handed back to merchants as concrete next steps, with OpenAI on Cloud Run behind a deterministic rule-based fallback and full audit tracking.",
-    points: [
-      "Maps analytics signals to actionable promotions, collections, and product-description updates via conditional API orchestration.",
-      "Cut analytical API latency from 30 to 60 seconds down to milliseconds with a BigQuery to Postgres hybrid, plus an NLP-to-SQL reporting engine with scheduled email delivery.",
-      "Festival-aware ad-push recommendations that schedule themselves for the right moment.",
+      "Led full-stack delivery as DRI for lender and merchant panels within a microservice-based lending ecosystem, driving configuration, transaction, reporting, role-management, and payment workflows end to end.",
+      "Strengthened core transaction and reconciliation services (Node/Express) by refining models, cron jobs, lender-aware state handling, and summary APIs, improving correctness and operational reliability.",
+      "Enhanced auth, session, and RBAC flows across distributed services (stonewall, enclose) by fixing token handling, route ordering, and lender-user mappings, and aligning contracts via a generated SDK layer.",
+      "Improved platform resilience through Kafka-based async workflows, Redis caching, Postgres persistence, and Swagger-driven contracts, stabilizing cross-service communication and notification and reporting infrastructure.",
     ],
   },
 ];

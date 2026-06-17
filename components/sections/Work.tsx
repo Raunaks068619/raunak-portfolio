@@ -33,9 +33,10 @@ export default function Work() {
         </div>
       </a>
 
-      <p className="reveal mt-9 max-w-[54ch] text-[1.4rem] font-medium leading-[1.35] tracking-[-0.01em] text-ink sm:text-[1.7rem]">
-        Four systems I own or built end to end, on Fynd&apos;s{" "}
-        <span className="serif pr-[0.04em] text-purple-deep">Zenith Intelligence Platform</span>.
+      <p className="reveal mt-9 max-w-[56ch] text-[1.4rem] font-medium leading-[1.35] tracking-[-0.01em] text-ink sm:text-[1.7rem]">
+        Three product areas at Fynd,{" "}
+        <span className="serif pr-[0.04em] text-purple-deep">owned end to end</span>: the
+        intelligence platform, the recommendations engine, and a B2B lending product.
       </p>
 
       <div className="mt-10">
