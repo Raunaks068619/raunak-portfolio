@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { posts } from "@/lib/content";
 import { ArrowUpRight } from "@/components/ui/icons";
-import LinkedInEmbed from "@/components/ui/LinkedInEmbed";
+import FeaturedArticle from "@/components/ui/FeaturedArticle";
+import PostRow from "@/components/ui/PostRow";
 
 export default function Writing() {
   return (
@@ -11,13 +12,17 @@ export default function Writing() {
           Writing
         </h2>
         <p className="reveal mt-3 max-w-[60ch] text-[1.05rem] leading-[1.6] text-ink-soft">
-          I take apart how AI agents actually work on disk, and write up what I
-          find. A short series, posted on LinkedIn.
+          Build stories and a series taking apart how AI agents actually work on
+          disk. Published on LinkedIn.
         </p>
 
-        <div className="reveal mt-10 grid gap-6 lg:grid-cols-2">
-          {posts.slice(0, 2).map((p) => (
-            <LinkedInEmbed key={p.embedUrn} urn={p.embedUrn} title={p.title} />
+        <div className="reveal mt-10">
+          <FeaturedArticle />
+        </div>
+
+        <div className="reveal mt-6">
+          {posts.slice(0, 2).map((post, i) => (
+            <PostRow key={i} post={post} />
           ))}
         </div>
 

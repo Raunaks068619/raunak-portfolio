@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import { posts, writingIntro } from "@/lib/content";
 import Nav from "@/components/ui/Nav";
 import Footer from "@/components/ui/Footer";
-import LinkedInEmbed from "@/components/ui/LinkedInEmbed";
+import FeaturedArticle from "@/components/ui/FeaturedArticle";
+import PostRow from "@/components/ui/PostRow";
 import { LinkedinIcon } from "@/components/ui/icons";
 
 export const metadata: Metadata = {
   title: "Writing",
   description:
-    "Raunak Singh's writing — a series on reverse-engineering how AI coding agents (Claude, Codex, Antigravity) store context, and on building design-taste.",
+    "Raunak Singh's writing — building an Instagram ad generator in 48 hours, and a series on reverse-engineering how AI coding agents (Claude, Codex, Antigravity) store context.",
   alternates: { canonical: "/blogs" },
 };
 
@@ -24,9 +25,13 @@ export default function Blogs() {
           <p className="mt-4 text-[1.075rem] leading-[1.7] text-ink-soft">{writingIntro}</p>
         </header>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-2">
-          {posts.map((post) => (
-            <LinkedInEmbed key={post.embedUrn} urn={post.embedUrn} title={post.title} />
+        <div className="mt-12">
+          <FeaturedArticle />
+        </div>
+
+        <div className="mt-6">
+          {posts.map((post, i) => (
+            <PostRow key={i} post={post} />
           ))}
         </div>
 

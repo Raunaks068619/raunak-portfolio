@@ -418,12 +418,25 @@ export type Post = {
   tag: string;
   platform: string;
   thumb: { kind: "ledger" | "graph" | "browser" | "image"; src?: string };
+  reactions: number;
   /** LinkedIn embed URN, e.g. "urn:li:ugcPost:7459494258400575488". */
   embedUrn: string;
 };
 
 export const writingIntro =
   "I got curious about how AI coding agents actually work on disk, not the chat UI, the real internals. So I took apart how Claude, Codex, and Antigravity store context on my own machine and wrote up the rabbit hole. A short series.";
+
+/* The newest piece, featured at the top of Writing. */
+export const featuredArticle = {
+  kicker: "Article",
+  title: "Taming the Beast: how we built an Instagram ad generator in 48 hours",
+  excerpt:
+    "A hackathon build that cut Instagram ad setup from twenty minutes to two: Meta's Ads API, AI-written captions, Facebook OAuth, and a Redis trick that stretched a 15-minute access token to 10 days.",
+  date: "Dec 2025",
+  cover: "/media/article-cover.png",
+  href: "https://www.linkedin.com/pulse/taming-beast-how-we-built-instagram-ad-generator-48-hours-singh-wtilf",
+  tags: ["Hackathon", "Meta Ads API", "OAuth"],
+};
 
 export const posts: Post[] = [
   {
@@ -435,6 +448,7 @@ export const posts: Post[] = [
     tag: "Architecture",
     platform: "LinkedIn",
     thumb: { kind: "ledger" },
+    reactions: 18,
     embedUrn: "urn:li:ugcPost:7459494258400575488",
   },
   {
@@ -446,6 +460,7 @@ export const posts: Post[] = [
     tag: "AI internals",
     platform: "LinkedIn",
     thumb: { kind: "graph" },
+    reactions: 26,
     embedUrn: "urn:li:ugcPost:7458778510132891648",
   },
   {
@@ -457,6 +472,7 @@ export const posts: Post[] = [
     tag: "AI internals",
     platform: "LinkedIn",
     thumb: { kind: "browser" },
+    reactions: 14,
     embedUrn: "urn:li:ugcPost:7461659365780025344",
   },
   {
@@ -468,6 +484,7 @@ export const posts: Post[] = [
     tag: "Design + AI",
     platform: "LinkedIn",
     thumb: { kind: "image", src: "/media/design-taste-og.png" },
+    reactions: 19,
     embedUrn: "urn:li:share:7464260847507447809",
   },
 ];
