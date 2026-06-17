@@ -1,10 +1,16 @@
-import { profile, metrics } from "@/lib/content";
+import Link from "next/link";
+import { profile, projects, currentRole, earlierRoles } from "@/lib/content";
 import { GithubIcon, LinkedinIcon, MailIcon, ArrowUpRight } from "@/components/ui/icons";
+
+const companies = [
+  { logo: currentRole.logo, name: currentRole.company, dark: true },
+  ...earlierRoles.map((r) => ({ logo: r.logo, name: r.company, dark: false })),
+];
 
 export default function Hero() {
   return (
-    <section id="main" className="relative overflow-hidden pt-16 sm:pt-24">
-      {/* faint identity wash, not glassmorphism: a single soft radial behind the type */}
+    <section id="main" className="relative overflow-hidden pt-12 sm:pt-16">
+      {/* faint identity wash behind the type */}
       <div
         aria-hidden
         className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[820px] -translate-x-1/2 opacity-[0.5]"
@@ -15,107 +21,104 @@ export default function Hero() {
       />
 
       <div className="relative mx-auto max-w-6xl px-6 lg:px-10">
-        <div className="flex flex-col-reverse gap-9 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
-          <div className="min-w-0">
-        <p className="reveal mono flex items-center gap-2.5 text-[12.5px] text-ink-faint">
-          <span className="livedot inline-block h-[7px] w-[7px] rounded-full bg-ember" />
-          SDE at Fynd · Zenith Intelligence Platform · Mumbai
+        <p className="reveal text-[clamp(1.05rem,2.4vw,1.4rem)] font-medium text-ink-soft">
+          Hi there, I&apos;m
         </p>
 
-        <h1 className="reveal mt-6 text-[clamp(2.9rem,9vw,6.3rem)] font-semibold leading-[0.96] tracking-[-0.03em] text-ink">
+        {/* photo + intro */}
+        <div className="mt-6 grid items-start gap-x-12 gap-y-8 lg:grid-cols-[300px_minmax(0,1fr)]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={profile.photo}
+            alt="Raunak Singh"
+            width={300}
+            height={360}
+            className="reveal aspect-[5/6] w-full max-w-[300px] rounded-2xl border border-line object-cover shadow-md ring-1 ring-purple/15"
+          />
+
+          <div className="reveal" data-delay="1">
+            <p className="max-w-[60ch] text-[1.0625rem] leading-[1.7] text-ink-soft">
+              {profile.blurb}
+            </p>
+
+            {/* recent work, mini */}
+            <div className="mt-7">
+              <p className="mono text-[11px] uppercase tracking-[0.18em] text-ink-faint">
+                Recent work
+              </p>
+              <div className="mt-3 grid grid-cols-3 gap-3">
+                {projects.map((p) => (
+                  <Link key={p.slug} href={`/projects/${p.slug}`} className="group block">
+                    <div
+                      className="flex aspect-[5/4] items-center justify-center overflow-hidden rounded-xl border border-line"
+                      style={{
+                        backgroundImage: `linear-gradient(140deg, oklch(${p.coverTint.from}), oklch(${p.coverTint.to}))`,
+                      }}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={p.mark} alt="" width={32} height={32} className="h-8 w-8 rounded-lg ring-1 ring-white/15" />
+                    </div>
+                    <p className="mono mt-2 truncate text-[11px] text-ink-faint transition-colors group-hover:text-ink">
+                      {p.name}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* links */}
+            <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
+              <a href={profile.links.github} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 text-[14px] text-ink transition-colors hover:text-purple-deep">
+                <GithubIcon className="opacity-70" />
+                <span className="ulink">GitHub</span>
+              </a>
+              <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 text-[14px] text-ink transition-colors hover:text-purple-deep">
+                <LinkedinIcon className="opacity-70" />
+                <span className="ulink">LinkedIn</span>
+              </a>
+              <a href={profile.links.email} className="group inline-flex items-center gap-2 text-[14px] text-ink transition-colors hover:text-purple-deep">
+                <MailIcon className="opacity-70" />
+                <span className="ulink">Email</span>
+              </a>
+              <a href={profile.links.resume} target="_blank" rel="noopener noreferrer" className="mono inline-flex items-center gap-1.5 rounded-md border border-line px-3 py-1.5 text-[12.5px] text-ink-soft transition-colors hover:border-ink hover:text-ink">
+                Résumé, PDF
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* the name, big */}
+        <h1 className="reveal mt-10 text-[clamp(3rem,13.5vw,9.5rem)] font-semibold leading-[0.86] tracking-[-0.04em] text-ink">
           Raunak Singh
         </h1>
-
-        <p
-          data-delay="1"
-          className="reveal mt-6 max-w-[20ch] text-[clamp(1.5rem,3.7vw,2.4rem)] font-medium leading-[1.18] tracking-[-0.01em] text-ink sm:max-w-[24ch]"
-        >
-          Full-stack and AI engineer. I build AI-native systems,{" "}
-          <span className="serif pr-[0.08em] text-purple-deep">and reverse-engineer</span>{" "}
-          the ones I don&apos;t.
+        <p className="reveal mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-1 text-[clamp(1.35rem,3.4vw,2.2rem)] font-medium tracking-[-0.01em] text-ink">
+          Full-stack &amp; AI Engineer
+          <span className="mono text-[12.5px] font-normal uppercase tracking-[0.14em] text-ink-faint">
+            SDE at Fynd · Mumbai
+          </span>
         </p>
 
-        <p
-          data-delay="2"
-          className="reveal mt-7 max-w-[62ch] text-[1.0625rem] leading-[1.65] text-ink-soft"
-        >
-          {profile.blurb}
-        </p>
-
-        <div data-delay="2" className="reveal mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">
-          <a
-            href={profile.links.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 text-[14px] text-ink transition-colors hover:text-purple-deep"
-          >
-            <GithubIcon className="opacity-70" />
-            <span className="ulink">GitHub</span>
-            <ArrowUpRight className="opacity-40 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" width={13} height={13} />
-          </a>
-          <a
-            href={profile.links.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 text-[14px] text-ink transition-colors hover:text-purple-deep"
-          >
-            <LinkedinIcon className="opacity-70" />
-            <span className="ulink">LinkedIn</span>
-            <ArrowUpRight className="opacity-40 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" width={13} height={13} />
-          </a>
-          <a
-            href={profile.links.email}
-            className="group inline-flex items-center gap-2 text-[14px] text-ink transition-colors hover:text-purple-deep"
-          >
-            <MailIcon className="opacity-70" />
-            <span className="ulink">Email</span>
-          </a>
-          <a
-            href={profile.links.resume}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mono inline-flex items-center gap-1.5 rounded-md border border-line px-3 py-1.5 text-[12.5px] text-ink-soft transition-colors hover:border-ink hover:text-ink"
-          >
-            One-pager, PDF
-          </a>
-        </div>
-          </div>
-
-          <div className="reveal lg:shrink-0 lg:pt-1.5">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={profile.photo}
-              alt="Raunak Singh"
-              width={184}
-              height={184}
-              className="h-28 w-28 rounded-2xl border border-line object-cover shadow-md ring-1 ring-purple/15 sm:h-32 sm:w-32 lg:h-44 lg:w-44"
-            />
+        {/* shipped at */}
+        <div className="reveal mt-14 border-t border-line pt-7">
+          <p className="mono text-[11px] uppercase tracking-[0.18em] text-ink-faint">
+            Shipped at
+          </p>
+          <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-4">
+            {companies.map((c) => (
+              <span key={c.name} className="flex items-center gap-2.5 opacity-75 transition-opacity hover:opacity-100">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={c.logo}
+                  alt={`${c.name} logo`}
+                  width={36}
+                  height={36}
+                  className={`h-9 w-9 rounded-lg object-contain ${c.dark ? "bg-[oklch(0.17_0.02_290)] p-1.5" : ""}`}
+                />
+                <span className="text-[14px] font-medium text-ink-soft">{c.name}</span>
+              </span>
+            ))}
           </div>
         </div>
-
-        {/* the receipts: editorial data row, hairline-separated, no stat cards */}
-        <dl className="reveal mt-14 grid grid-cols-2 border-t border-line sm:grid-cols-4">
-          {metrics.map((m, i) => (
-            <div
-              key={m.label}
-              className={[
-                "py-5 pr-5",
-                i % 2 === 0 ? "border-r border-line" : "",
-                i < 2 ? "border-b border-line sm:border-b-0" : "",
-                "sm:border-r sm:border-line",
-                i === metrics.length - 1 ? "sm:border-r-0" : "",
-                i === 0 ? "sm:pl-0" : "sm:pl-6",
-              ].join(" ")}
-            >
-              <dt className="text-[1.75rem] font-semibold tracking-[-0.02em] text-ink">
-                {m.value}
-              </dt>
-              <dd className="mono mt-1.5 text-[11.5px] leading-[1.45] text-ink-faint">
-                {m.label}
-              </dd>
-            </div>
-          ))}
-        </dl>
       </div>
     </section>
   );
