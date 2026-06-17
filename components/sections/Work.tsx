@@ -77,45 +77,47 @@ export default function Work() {
         ))}
       </div>
 
-      {/* earlier roles */}
-      <div className="reveal mt-16">
-        <p className="mono text-[11.5px] uppercase tracking-[0.18em] text-ink-faint">
+      {/* earlier roles, same editorial treatment as Fynd */}
+      <div className="mt-14">
+        <p className="reveal mono text-[11.5px] uppercase tracking-[0.18em] text-ink-faint">
           Earlier
         </p>
-        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+        <div className="mt-2">
           {earlierRoles.map((r) => (
             <a
               key={r.company}
               href={r.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-start gap-4 rounded-xl border border-line bg-paper-2 px-5 py-4 transition-colors hover:border-ink/30"
+              className="reveal group grid items-start gap-x-8 gap-y-3 border-t border-line py-8 sm:grid-cols-[auto_1fr]"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={r.logo}
                 alt={`${r.company} logo`}
-                width={44}
-                height={44}
-                className="h-11 w-11 shrink-0 rounded-xl border border-line"
+                width={56}
+                height={56}
+                className="h-12 w-12 shrink-0 rounded-2xl border border-line object-contain sm:h-14 sm:w-14"
                 loading="lazy"
               />
               <div className="min-w-0">
-                <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
-                  <h4 className="inline-flex items-center gap-1.5 text-[1.05rem] font-semibold tracking-[-0.01em] text-ink">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <h3 className="inline-flex items-center gap-1.5 text-[1.3rem] font-semibold tracking-[-0.01em] text-ink transition-colors group-hover:text-purple-deep">
                     {r.company}
                     <ArrowUpRight
-                      width={12}
-                      height={12}
+                      width={13}
+                      height={13}
                       className="text-ink-faint opacity-0 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100"
                     />
-                  </h4>
-                  <span className="mono text-[11px] text-ink-faint">{r.date}</span>
+                  </h3>
+                  <span className="mono text-[11.5px] uppercase tracking-[0.12em] text-ink-faint">
+                    {r.role}
+                  </span>
                 </div>
-                <p className="mono mt-0.5 text-[11px] uppercase tracking-[0.1em] text-ink-faint">
-                  {r.role}
+                <p className="mono mt-1 text-[11.5px] tracking-[0.04em] text-ink-faint">{r.date}</p>
+                <p className="mt-3 max-w-[64ch] text-[0.95rem] leading-[1.6] text-ink-soft">
+                  {r.summary}
                 </p>
-                <p className="mt-2 text-[0.9rem] leading-[1.5] text-ink-soft">{r.summary}</p>
               </div>
             </a>
           ))}

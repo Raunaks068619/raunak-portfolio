@@ -4,19 +4,14 @@ import { ArrowUpRight } from "@/components/ui/icons";
 type Day = { date: string; count: number; level: 0 | 1 | 2 | 3 | 4 };
 type Contrib = { total: Record<string, number>; contributions: Day[] };
 
-// Level colors, tuned to read on both light and dark themes.
-const LEVELS = [
-  "var(--color-line)",
-  "oklch(0.72 0.1 290 / 0.5)",
-  "oklch(0.67 0.15 290 / 0.72)",
-  "oklch(0.62 0.19 290 / 0.9)",
-  "oklch(0.58 0.21 290)",
-];
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const CELL = 20; // px
+const GAP = 5; // px
 
-async function fetchContrib(): Promise<Contrib | null> {
+async function fetchYear(year: number): Promise<Contrib | null> {
   try {
     const res = await fetch(
-      "https://github-contributions-api.jogruber.de/v4/Raunaks068619?y=last",
+      `https://github-contributions-api.jogruber.de/v4/Raunaks068619?y=${year}`,
       { next: { revalidate: 86400 } },
     );
     if (!res.ok) return null;
@@ -27,29 +22,44 @@ async function fetchContrib(): Promise<Contrib | null> {
 }
 
 export default async function GitGraph() {
-  const data = await fetchContrib();
+  const now = new Date();
+  const year = now.getUTCFullYear();
+  const todayISO = now.toISOString().slice(0, 10);
+
+  const data = await fetchYear(year);
   if (!data?.contributions?.length) return null;
 
-  const days = data.contributions;
-  const total = data.total?.lastYear ?? days.reduce((s, d) => s + d.count, 0);
+  // January 1st of this year through today.
+  const days = data.contributions.filter((d) => d.date <= todayISO);
+  if (!days.length) return null;
+  const total = data.total?.[String(year)] ?? days.reduce((s, d) => s + d.count, 0);
 
-  // Pad the front so each column is a Sun–Sat week, then chunk by 7.
   const lead = new Date(days[0].date + "T00:00:00Z").getUTCDay();
   const cells: (Day | null)[] = [...Array(lead).fill(null), ...days];
   const columns: (Day | null)[][] = [];
   for (let i = 0; i < cells.length; i += 7) columns.push(cells.slice(i, i + 7));
+
+  let prevMonth = -1;
+  const labels = columns.map((col) => {
+    const d = col.find(Boolean) as Day | undefined;
+    if (!d) return "";
+    const m = new Date(d.date + "T00:00:00Z").getUTCMonth();
+    if (m !== prevMonth) {
+      prevMonth = m;
+      return MONTHS[m];
+    }
+    return "";
+  });
 
   return (
     <section id="github" className="py-20 sm:py-24">
       <div className="mx-auto max-w-6xl px-6 lg:px-10">
         <div className="reveal flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="mono text-[12px] uppercase tracking-[0.18em] text-ink-faint">
-              On GitHub
-            </p>
+            <p className="mono text-[12px] uppercase tracking-[0.18em] text-ink-faint">On GitHub</p>
             <p className="mt-2 text-[1.3rem] font-medium tracking-[-0.01em] text-ink sm:text-[1.6rem]">
               <span className="font-semibold text-purple-deep">{total.toLocaleString()}</span>{" "}
-              contributions in the last year.
+              contributions in {year}.
             </p>
           </div>
           <Link
@@ -61,27 +71,47 @@ export default async function GitGraph() {
           </Link>
         </div>
 
-        <div className="reveal mt-7 overflow-x-auto pb-2">
-          <div className="flex gap-[3px]" style={{ minWidth: "max-content" }}>
-            {columns.map((col, ci) => (
-              <div key={ci} className="flex flex-col gap-[3px]">
-                {col.map((d, ri) => (
+        <div className="reveal mt-8 overflow-x-auto pb-2">
+          <div style={{ minWidth: "max-content" }}>
+            {/* month labels, positioned over their columns */}
+            <div className="relative mb-2 h-4">
+              {labels.map((l, i) =>
+                l ? (
                   <span
-                    key={ri}
-                    title={d ? `${d.count} on ${d.date}` : undefined}
-                    className="h-[11px] w-[11px] rounded-[2px]"
-                    style={{ background: d ? LEVELS[d.level] : "transparent" }}
-                  />
-                ))}
-              </div>
-            ))}
+                    key={i}
+                    className="mono absolute top-0 text-[11px] text-ink-faint"
+                    style={{ left: i * (CELL + GAP) }}
+                  >
+                    {l}
+                  </span>
+                ) : null,
+              )}
+            </div>
+            {/* grid */}
+            <div className="flex" style={{ gap: GAP }}>
+              {columns.map((col, ci) => (
+                <div key={ci} className="flex flex-col" style={{ gap: GAP }}>
+                  {Array.from({ length: 7 }).map((_, ri) => {
+                    const d = col[ri];
+                    return (
+                      <span
+                        key={ri}
+                        title={d ? `${d.count} on ${d.date}` : undefined}
+                        className={`rounded-[4px] ${d ? `gh-${d.level}` : ""}`}
+                        style={{ width: CELL, height: CELL, background: d ? undefined : "transparent" }}
+                      />
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="reveal mono mt-3 flex items-center gap-1.5 text-[11px] text-ink-faint">
+        <div className="reveal mono mt-4 flex items-center gap-1.5 text-[11px] text-ink-faint">
           <span className="mr-1">Less</span>
-          {LEVELS.map((c, i) => (
-            <span key={i} className="h-[11px] w-[11px] rounded-[2px]" style={{ background: c }} />
+          {[0, 1, 2, 3, 4].map((l) => (
+            <span key={l} className={`gh-${l} rounded-[3px]`} style={{ width: 14, height: 14 }} />
           ))}
           <span className="ml-1">More</span>
         </div>
