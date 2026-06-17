@@ -84,7 +84,7 @@ export default function Nav() {
         <div className="flex items-center gap-2.5">
           <ThemeToggle />
           <a
-            href="mailto:raunaksingh@gofynd.com"
+            href="mailto:raunakspersonal@gmail.com"
             className="mono hidden rounded-md border border-line px-3.5 py-1.5 text-[12.5px] text-ink-soft transition-colors hover:border-ink hover:text-ink sm:inline-block"
           >
             Get in touch

@@ -5,8 +5,8 @@ type Day = { date: string; count: number; level: 0 | 1 | 2 | 3 | 4 };
 type Contrib = { total: Record<string, number>; contributions: Day[] };
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const CELL = 36; // px
-const GAP = 6; // px
+const CELL = 22; // px
+const GAP = 5; // px
 
 async function fetchYear(year: number): Promise<Contrib | null> {
   try {
@@ -97,7 +97,7 @@ export default async function GitGraph() {
                       <span
                         key={ri}
                         title={d ? `${d.count} on ${d.date}` : undefined}
-                        className={`rounded-[7px] ${d ? `gh-${d.level}` : ""}`}
+                        className={`rounded-[5px] ${d ? `gh-${d.level}` : ""}`}
                         style={{ width: CELL, height: CELL, background: d ? undefined : "transparent" }}
                       />
                     );

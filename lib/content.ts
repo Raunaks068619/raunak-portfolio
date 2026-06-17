@@ -8,7 +8,7 @@ export const profile = {
   role: "Software Development Engineer",
   org: "Fynd · Zenith Intelligence Platform",
   location: "Mumbai, India",
-  email: "raunaksingh@gofynd.com",
+  email: "raunakspersonal@gmail.com",
   photo: "/media/raunak-li.jpg",
   years: "3+ years",
   // The line that has to land in the first second.
@@ -23,7 +23,7 @@ export const profile = {
     github: "https://github.com/Raunaks068619",
     linkedin: "https://www.linkedin.com/in/raunak-singh-608051218/",
     x: "https://x.com/Raunak04535524",
-    email: "mailto:raunaksingh@gofynd.com",
+    email: "mailto:raunakspersonal@gmail.com",
     resume: "/core-strengths.pdf",
   },
 } as const;
