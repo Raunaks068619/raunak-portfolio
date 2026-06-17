@@ -6,7 +6,9 @@ export type CardData = {
   tagline: string;
   cardSummary: string;
   tags: string[];
-  coverTint: { from: string; to: string };
+  mesh: string;
+  coverLight?: boolean;
+  iconBg?: "white";
   mark?: string;
   status?: { label: string; live: boolean };
   role?: string;
@@ -15,47 +17,58 @@ export type CardData = {
 };
 
 /**
- * A featured-project card: a tinted cover with the mark and name, then a
+ * A featured-project card: an app icon on an abstract mesh cover, then a
  * short summary and tags. Links into a case study, or out to a repo.
  */
 export default function ProjectCard({ card }: { card: CardData }) {
+  const light = card.coverLight;
   const inner = (
     <>
       <div
         className="relative flex aspect-[16/10] items-center justify-center overflow-hidden rounded-2xl border border-line"
-        style={{
-          backgroundImage: `linear-gradient(140deg, oklch(${card.coverTint.from}), oklch(${card.coverTint.to}))`,
-        }}
+        style={{ background: card.mesh }}
       >
         {card.status?.live && (
-          <span className="mono absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-black/25 px-2.5 py-1 text-[11px] text-white/90 backdrop-blur-sm">
+          <span
+            className={`mono absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] backdrop-blur-sm ${
+              light ? "bg-black/[0.06] text-black/65" : "bg-black/25 text-white/90"
+            }`}
+          >
             <span className="h-[6px] w-[6px] rounded-full bg-ember" />
             {card.status.label}
           </span>
         )}
         {card.role && (
-          <span className="mono absolute right-4 top-4 text-[11px] uppercase tracking-[0.14em] text-white/55">
+          <span
+            className={`mono absolute right-4 top-4 text-[11px] uppercase tracking-[0.14em] ${
+              light ? "text-black/40" : "text-white/55"
+            }`}
+          >
             {card.role}
           </span>
         )}
         <div className="flex flex-col items-center gap-4 px-6 text-center">
-          {card.mark && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={card.mark}
-              alt=""
-              width={56}
-              height={56}
-              className="h-14 w-14 rounded-2xl shadow-lg ring-1 ring-white/15"
-            />
-          )}
-          <span className="text-[2.3rem] font-semibold leading-none tracking-[-0.03em] text-white drop-shadow-sm sm:text-[2.8rem]">
+          {card.mark &&
+            (card.iconBg === "white" ? (
+              <span className="grid h-16 w-16 place-items-center rounded-2xl bg-white shadow-lg ring-1 ring-black/[0.06]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={card.mark} alt="" width={40} height={40} className="h-10 w-10" />
+              </span>
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={card.mark} alt="" width={64} height={64} className="h-16 w-16 rounded-2xl shadow-lg ring-1 ring-white/15" />
+            ))}
+          <span
+            className={`text-[2.3rem] font-semibold leading-none tracking-[-0.03em] drop-shadow-sm sm:text-[2.8rem] ${
+              light ? "text-[oklch(0.24_0.05_290)]" : "text-white"
+            }`}
+          >
             {card.name}
           </span>
         </div>
         <span
           aria-hidden
-          className="absolute inset-0 bg-white/0 transition-colors duration-300 group-hover:bg-white/[0.04]"
+          className="absolute inset-0 transition-colors duration-300 group-hover:bg-white/[0.05]"
         />
       </div>
 
@@ -89,13 +102,7 @@ export default function ProjectCard({ card }: { card: CardData }) {
 
   if (card.external) {
     return (
-      <a
-        href={card.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group block"
-        aria-label={`${card.name}, opens in a new tab`}
-      >
+      <a href={card.href} target="_blank" rel="noopener noreferrer" className="group block" aria-label={`${card.name}, opens in a new tab`}>
         {inner}
       </a>
     );

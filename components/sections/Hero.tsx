@@ -41,26 +41,36 @@ export default function Hero() {
               {profile.blurb}
             </p>
 
-            {/* recent work, mini */}
-            <div className="mt-7">
+            {/* recent work, as a dock of app icons */}
+            <div className="mt-8">
               <p className="mono text-[11px] uppercase tracking-[0.18em] text-ink-faint">
                 Recent work
               </p>
-              <div className="mt-3 grid grid-cols-3 gap-3">
+              <div className="mt-4 flex gap-6">
                 {projects.map((p) => (
-                  <Link key={p.slug} href={`/projects/${p.slug}`} className="group block">
-                    <div
-                      className="flex aspect-[5/4] items-center justify-center overflow-hidden rounded-xl border border-line"
-                      style={{
-                        backgroundImage: `linear-gradient(140deg, oklch(${p.coverTint.from}), oklch(${p.coverTint.to}))`,
-                      }}
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={p.mark} alt="" width={32} height={32} className="h-8 w-8 rounded-lg ring-1 ring-white/15" />
-                    </div>
-                    <p className="mono mt-2 truncate text-[11px] text-ink-faint transition-colors group-hover:text-ink">
+                  <Link
+                    key={p.slug}
+                    href={`/projects/${p.slug}`}
+                    className="group flex flex-col items-center gap-2"
+                  >
+                    {p.iconBg === "white" ? (
+                      <span className="grid h-14 w-14 place-items-center rounded-[14px] bg-white shadow-md ring-1 ring-black/[0.06] transition-transform duration-200 group-hover:-translate-y-1">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={p.mark} alt={`${p.name} icon`} width={36} height={36} className="h-9 w-9" />
+                      </span>
+                    ) : (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={p.mark}
+                        alt={`${p.name} icon`}
+                        width={56}
+                        height={56}
+                        className="h-14 w-14 rounded-[14px] shadow-md ring-1 ring-white/10 transition-transform duration-200 group-hover:-translate-y-1"
+                      />
+                    )}
+                    <span className="mono text-[11px] text-ink-faint transition-colors group-hover:text-ink">
                       {p.name}
-                    </p>
+                    </span>
                   </Link>
                 ))}
               </div>

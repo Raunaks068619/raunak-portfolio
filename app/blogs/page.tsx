@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { posts, writingIntro } from "@/lib/content";
 import Nav from "@/components/ui/Nav";
 import Footer from "@/components/ui/Footer";
-import PostRow from "@/components/ui/PostRow";
+import LinkedInEmbed from "@/components/ui/LinkedInEmbed";
 import { LinkedinIcon } from "@/components/ui/icons";
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export default function Blogs() {
   return (
     <>
       <Nav />
-      <main className="mx-auto max-w-4xl px-6 pb-8 pt-10 lg:px-10">
+      <main className="mx-auto max-w-5xl px-6 pb-8 pt-10 lg:px-10">
         <header className="max-w-[62ch]">
           <h1 className="text-[clamp(2.2rem,6vw,3.4rem)] font-semibold tracking-[-0.02em] text-ink">
             Writing
@@ -24,9 +24,9 @@ export default function Blogs() {
           <p className="mt-4 text-[1.075rem] leading-[1.7] text-ink-soft">{writingIntro}</p>
         </header>
 
-        <div className="mt-12">
-          {posts.map((post, i) => (
-            <PostRow key={i} post={post} />
+        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+          {posts.map((post) => (
+            <LinkedInEmbed key={post.embedUrn} urn={post.embedUrn} title={post.title} />
           ))}
         </div>
 
@@ -34,7 +34,7 @@ export default function Blogs() {
           href="https://www.linkedin.com/in/raunak-singh-608051218/"
           target="_blank"
           rel="noopener noreferrer"
-          className="mono mt-8 inline-flex items-center gap-2 border-t border-line pt-6 text-[13px] text-ink-soft transition-colors hover:text-ink"
+          className="mono mt-10 inline-flex items-center gap-2 border-t border-line pt-7 text-[13px] text-ink-soft transition-colors hover:text-ink"
         >
           <LinkedinIcon className="opacity-70" width={15} height={15} />
           <span className="ulink">More on LinkedIn</span>

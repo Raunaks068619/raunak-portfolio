@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { projects, sideProject } from "@/lib/content";
 import Nav from "@/components/ui/Nav";
 import Footer from "@/components/ui/Footer";
-import ProjectCard, { type CardData } from "@/components/ui/ProjectCard";
+import ProjectCard from "@/components/ui/ProjectCard";
+import { featuredCards } from "@/components/sections/Projects";
 import { ArrowUpRight, GithubIcon } from "@/components/ui/icons";
 
 export const metadata: Metadata = {
@@ -62,29 +62,7 @@ async function getRepos(): Promise<Repo[]> {
 export default async function ProjectsIndex() {
   const repos = await getRepos();
 
-  const featured: CardData[] = [
-    ...projects.map((p) => ({
-      name: p.name,
-      tagline: p.tagline,
-      cardSummary: p.cardSummary,
-      tags: p.tags,
-      coverTint: p.coverTint,
-      mark: p.mark,
-      status: p.status,
-      role: p.role,
-      href: `/projects/${p.slug}`,
-    })),
-    {
-      name: sideProject.name,
-      tagline: sideProject.tagline,
-      cardSummary: sideProject.cardSummary,
-      tags: sideProject.tags,
-      coverTint: sideProject.coverTint,
-      role: "Open source",
-      href: sideProject.href,
-      external: true,
-    },
-  ];
+  const featured = featuredCards;
 
   return (
     <>

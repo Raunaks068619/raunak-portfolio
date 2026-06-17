@@ -12,7 +12,7 @@ const socials = [
 export default function Contact() {
   return (
     <>
-      <Section id="contact" no="05" label="Contact" className="py-24 sm:py-32">
+      <Section id="contact" no="03" label="Contact" className="py-24 sm:py-32">
         <h2 className="reveal max-w-[18ch] text-[clamp(2rem,5.5vw,3.4rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-ink">
           Have a hard problem that needs{" "}
           <span className="serif font-normal text-purple-deep">an owner?</span>

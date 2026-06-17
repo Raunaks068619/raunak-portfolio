@@ -9,7 +9,7 @@ export const profile = {
   org: "Fynd · Zenith Intelligence Platform",
   location: "Mumbai, India",
   email: "raunaksingh@gofynd.com",
-  photo: "/media/raunak.jpg",
+  photo: "/media/raunak-li.jpg",
   years: "3+ years",
   // The line that has to land in the first second.
   statement: {
@@ -141,8 +141,12 @@ export type Project = {
   cardSummary: string;
   /** Category chips shown on the card (e.g. "AI", "PWA", "macOS"). */
   tags: string[];
-  /** OKLCH hue + chroma pair used to tint the card cover. */
-  coverTint: { from: string; to: string };
+  /** CSS background for the card cover: a layered-radial mesh gradient. */
+  mesh: string;
+  /** True when the cover is light, so name/meta render in dark ink. */
+  coverLight?: boolean;
+  /** Set when the mark needs its own tile (e.g. a transparent glyph). */
+  iconBg?: "white";
   href: string;
   hrefLabel: string;
   secondary?: { href: string; label: string };
@@ -168,7 +172,9 @@ export const projects: Project[] = [
     cardSummary:
       "An AI second brain that turns your X bookmarks into summaries, chat, and decks.",
     tags: ["AI", "RAG", "PWA"],
-    coverTint: { from: "0.62 0.2 287", to: "0.42 0.17 290" },
+    mesh: "radial-gradient(115% 115% at 16% 12%, oklch(0.9 0.09 292), transparent 55%), radial-gradient(100% 100% at 88% 16%, oklch(0.86 0.11 305), transparent 52%), radial-gradient(120% 120% at 72% 108%, oklch(0.88 0.08 278), transparent 60%), oklch(0.965 0.022 290)",
+    coverLight: true,
+    iconBg: "white",
     href: "https://bookmarx.co",
     hrefLabel: "bookmarx.co",
     secondary: { href: "https://github.com/Raunaks068619", label: "GitHub" },
@@ -236,7 +242,7 @@ export const projects: Project[] = [
     cardSummary:
       "A free, open-source macOS dictation app that keeps a private memory of everything you said.",
     tags: ["macOS", "Swift", "Local-first AI"],
-    coverTint: { from: "0.42 0.13 285", to: "0.22 0.06 288" },
+    mesh: "radial-gradient(115% 115% at 14% 14%, oklch(0.46 0.15 278), transparent 55%), radial-gradient(100% 100% at 92% 20%, oklch(0.52 0.16 248), transparent 52%), radial-gradient(125% 125% at 76% 108%, oklch(0.3 0.1 286), transparent 60%), oklch(0.21 0.06 285)",
     href: "https://vordi.site",
     hrefLabel: "vordi.site",
     secondary: {
@@ -296,7 +302,7 @@ export const projects: Project[] = [
     cardSummary:
       "A social habit tracker where you build streaks through friendly competition and photo proof.",
     tags: ["PWA", "Real-time", "Gamification"],
-    coverTint: { from: "0.6 0.16 30", to: "0.4 0.13 25" },
+    mesh: "radial-gradient(115% 115% at 16% 12%, oklch(0.64 0.17 36), transparent 55%), radial-gradient(100% 100% at 90% 18%, oklch(0.58 0.18 16), transparent 52%), radial-gradient(125% 125% at 70% 108%, oklch(0.42 0.14 28), transparent 60%), oklch(0.4 0.13 28)",
     href: "https://challengers-theta.vercel.app",
     hrefLabel: "Live demo",
     secondary: { href: "https://github.com/Raunaks068619/challengers", label: "GitHub" },
@@ -353,7 +359,7 @@ export const sideProject = {
   cardSummary:
     "My preferences on spacing, color, and type, encoded as craft principles an agent can follow.",
   tags: ["Open source", "AI tooling"],
-  coverTint: { from: "0.5 0.09 200", to: "0.28 0.06 215" },
+  mesh: "radial-gradient(115% 115% at 16% 14%, oklch(0.56 0.1 192), transparent 55%), radial-gradient(100% 100% at 90% 20%, oklch(0.5 0.11 212), transparent 52%), radial-gradient(125% 125% at 72% 108%, oklch(0.33 0.07 214), transparent 60%), oklch(0.31 0.07 205)",
   what:
     "AI writes good code and mediocre design. design-taste is the system I built over a few months to fix that: my preferences on spacing, color, and type, encoded as craft principles an agent can actually follow. Open source.",
 };
@@ -368,6 +374,8 @@ export type Post = {
   tag: string;
   platform: string;
   thumb: { kind: "ledger" | "graph" | "browser" | "image"; src?: string };
+  /** LinkedIn embed URN, e.g. "urn:li:ugcPost:7459494258400575488". */
+  embedUrn: string;
 };
 
 export const writingIntro =
@@ -383,6 +391,7 @@ export const posts: Post[] = [
     tag: "Architecture",
     platform: "LinkedIn",
     thumb: { kind: "ledger" },
+    embedUrn: "urn:li:ugcPost:7459494258400575488",
   },
   {
     title: "Reverse engineering AI agent internals",
@@ -393,6 +402,7 @@ export const posts: Post[] = [
     tag: "AI internals",
     platform: "LinkedIn",
     thumb: { kind: "graph" },
+    embedUrn: "urn:li:ugcPost:7458778510132891648",
   },
   {
     title: "Antigravity stores environments, not conversations",
@@ -403,6 +413,7 @@ export const posts: Post[] = [
     tag: "AI internals",
     platform: "LinkedIn",
     thumb: { kind: "browser" },
+    embedUrn: "urn:li:ugcPost:7461659365780025344",
   },
   {
     title: "AI writes code. It is still figuring out design.",
@@ -413,6 +424,7 @@ export const posts: Post[] = [
     tag: "Design + AI",
     platform: "LinkedIn",
     thumb: { kind: "image", src: "/media/design-taste-og.png" },
+    embedUrn: "urn:li:share:7464260847507447809",
   },
 ];
 
