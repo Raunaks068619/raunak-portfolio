@@ -2,7 +2,7 @@ import { aiWorkflow, stack } from "@/lib/content";
 
 export default function Build() {
   return (
-    <section id="build" className="scroll-mt-20 bg-night py-28 text-night-fg sm:py-36">
+    <section id="build" className="scroll-mt-20 border-y border-transparent bg-night py-28 text-night-fg dark:border-line sm:py-36">
       <div className="mx-auto max-w-6xl px-6 lg:px-10">
         <div className="grid gap-x-12 gap-y-10 lg:grid-cols-[170px_minmax(0,1fr)]">
           <div className="lg:sticky lg:top-24 lg:h-fit">

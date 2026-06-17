@@ -96,6 +96,45 @@ export const fyndWork: WorkItem[] = [
   },
 ];
 
+export const currentRole = {
+  logo: "/media/fynd-logo.svg",
+  company: "Fynd",
+  legal: "Shopsense Retail Technologies",
+  role: "Software Development Engineer",
+  date: "Aug 2022 – Present",
+  link: "https://www.fynd.com",
+};
+
+export type EarlierRole = {
+  logo: string;
+  company: string;
+  role: string;
+  date: string;
+  summary: string;
+  link: string;
+};
+
+export const earlierRoles: EarlierRole[] = [
+  {
+    logo: "/media/breez-logo.svg",
+    company: "Breez Mobility",
+    role: "Frontend Developer, Web/App",
+    date: "Dec 2021 – Mar 2022",
+    summary:
+      "Built multi-platform PWA interfaces in React, React Native, and Flutter, and wired up Firebase auth, sync, and real-time features for micro-mobility.",
+    link: "https://www.breezmobility.com/",
+  },
+  {
+    logo: "/media/spark-logo.svg",
+    company: "Spark",
+    role: "Freelance UI/UX Designer",
+    date: "May 2021 – Nov 2021",
+    summary:
+      "Led UI/UX for a matrimonial startup, from research and wireframes to high-fidelity prototypes and a reusable component system, alongside the engineering team.",
+    link: "https://www.linkedin.com/in/raunak-singh-608051218/",
+  },
+];
+
 /* ----------------------------------------------------------------- Projects */
 
 export type FieldNote = { problem: string; fix: string };

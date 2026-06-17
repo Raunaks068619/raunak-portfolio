@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* class-based dark mode (next-themes toggles .dark on <html>) */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ------------------------------------------------------------------ tokens */
 @theme {
   /* Color: OKLCH, tinted neutrals, committed purple identity. */
@@ -25,6 +28,24 @@
 
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ------------------------------------------------------- dark theme tokens */
+/* Same editorial purple identity, inverted into a warm purple-black.
+   Utilities reference these vars, so overriding the values flips the theme. */
+.dark {
+  --color-paper: oklch(0.155 0.016 288);
+  --color-paper-2: oklch(0.205 0.021 288);
+  --color-ink: oklch(0.945 0.01 290);
+  --color-ink-soft: oklch(0.74 0.018 290);
+  --color-ink-faint: oklch(0.6 0.018 290);
+  --color-line: oklch(0.3 0.018 288);
+  --color-line-soft: oklch(0.255 0.016 288);
+  --color-purple: oklch(0.7 0.19 290);
+  --color-purple-deep: oklch(0.78 0.15 292);
+  --color-purple-bright: oklch(0.76 0.19 290);
+  --color-ember: oklch(0.75 0.15 58);
+  color-scheme: dark;
 }
 
 /* -------------------------------------------------------------------- base */

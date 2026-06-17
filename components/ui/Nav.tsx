@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 const sections = [
-  { id: "work", label: "Work" },
+  { id: "work", label: "Experience" },
   { id: "projects", label: "Projects" },
   { id: "writing", label: "Writing" },
   { id: "build", label: "How I build" },
@@ -67,12 +68,15 @@ export default function Nav() {
           ))}
         </ul>
 
-        <a
-          href="mailto:raunaksingh@gofynd.com"
-          className="mono rounded-md border border-line px-3.5 py-1.5 text-[12.5px] text-ink-soft transition-colors hover:border-ink hover:text-ink"
-        >
-          Get in touch
-        </a>
+        <div className="flex items-center gap-2.5">
+          <ThemeToggle />
+          <a
+            href="mailto:raunaksingh@gofynd.com"
+            className="mono rounded-md border border-line px-3.5 py-1.5 text-[12.5px] text-ink-soft transition-colors hover:border-ink hover:text-ink"
+          >
+            Get in touch
+          </a>
+        </div>
       </nav>
     </header>
   );
