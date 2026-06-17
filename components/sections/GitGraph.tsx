@@ -5,8 +5,8 @@ type Day = { date: string; count: number; level: 0 | 1 | 2 | 3 | 4 };
 type Contrib = { total: Record<string, number>; contributions: Day[] };
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const CELL = 20; // px
-const GAP = 5; // px
+const CELL = 36; // px
+const GAP = 6; // px
 
 async function fetchYear(year: number): Promise<Contrib | null> {
   try {
@@ -71,15 +71,15 @@ export default async function GitGraph() {
           </Link>
         </div>
 
-        <div className="reveal mt-8 overflow-x-auto pb-2">
-          <div style={{ minWidth: "max-content" }}>
+        <div className="reveal mt-10 overflow-x-auto pb-2">
+          <div className="mx-auto w-fit">
             {/* month labels, positioned over their columns */}
-            <div className="relative mb-2 h-4">
+            <div className="relative mb-3 h-5">
               {labels.map((l, i) =>
                 l ? (
                   <span
                     key={i}
-                    className="mono absolute top-0 text-[11px] text-ink-faint"
+                    className="mono absolute top-0 text-[13px] text-ink-faint"
                     style={{ left: i * (CELL + GAP) }}
                   >
                     {l}
@@ -97,7 +97,7 @@ export default async function GitGraph() {
                       <span
                         key={ri}
                         title={d ? `${d.count} on ${d.date}` : undefined}
-                        className={`rounded-[4px] ${d ? `gh-${d.level}` : ""}`}
+                        className={`rounded-[7px] ${d ? `gh-${d.level}` : ""}`}
                         style={{ width: CELL, height: CELL, background: d ? undefined : "transparent" }}
                       />
                     );
@@ -105,15 +105,15 @@ export default async function GitGraph() {
                 </div>
               ))}
             </div>
+            {/* legend, aligned under the grid */}
+            <div className="mono mt-5 flex items-center gap-2 text-[12px] text-ink-faint">
+              <span className="mr-1">Less</span>
+              {[0, 1, 2, 3, 4].map((l) => (
+                <span key={l} className={`gh-${l} rounded-[5px]`} style={{ width: 18, height: 18 }} />
+              ))}
+              <span className="ml-1">More</span>
+            </div>
           </div>
-        </div>
-
-        <div className="reveal mono mt-4 flex items-center gap-1.5 text-[11px] text-ink-faint">
-          <span className="mr-1">Less</span>
-          {[0, 1, 2, 3, 4].map((l) => (
-            <span key={l} className={`gh-${l} rounded-[3px]`} style={{ width: 14, height: 14 }} />
-          ))}
-          <span className="ml-1">More</span>
         </div>
       </div>
     </section>
