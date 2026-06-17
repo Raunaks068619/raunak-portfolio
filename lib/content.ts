@@ -148,10 +148,18 @@ export type Project = {
   mark: string;
   tagline: string;
   status: { label: string; live: boolean };
+  /** Short, card-level descriptor for the landing and /projects grids. */
+  cardSummary: string;
+  /** Category chips shown on the card (e.g. "AI", "PWA", "macOS"). */
+  tags: string[];
+  /** OKLCH hue + chroma pair used to tint the card cover. */
+  coverTint: { from: string; to: string };
   href: string;
   hrefLabel: string;
   secondary?: { href: string; label: string };
   what: string;
+  /** One paragraph on the architecture, for the case study. */
+  systemDesign: string;
   stack: string[];
   /** When set, the project shows a live iframe preview instead of screenshots. */
   preview?: { src: string; label: string };
@@ -168,11 +176,17 @@ export const projects: Project[] = [
     mark: "/media/bookmarx-mark.png",
     tagline: "A passive brain for your X bookmarks.",
     status: { label: "Live", live: true },
+    cardSummary:
+      "An AI second brain that turns your X bookmarks into summaries, chat, and decks.",
+    tags: ["AI", "RAG", "PWA"],
+    coverTint: { from: "0.62 0.2 287", to: "0.42 0.17 290" },
     href: "https://bookmarx.co",
     hrefLabel: "bookmarx.co",
     secondary: { href: "https://github.com/Raunaks068619", label: "GitHub" },
     what:
       "You save ideas on X and never come back to them. Bookmarx syncs your bookmarks, enriches each one with an AI summary and tags, and lets you chat with everything you saved, get scheduled digests, and turn a thread into a slide deck. A Next.js 16 PWA with offline support and push.",
+    systemDesign:
+      "One canonical row per tweet is shared across every user, with per-user metadata kept in a separate join, so enrichment is fetched and cached exactly once and deduplication is free. Search fuses pgvector and Postgres full-text via Reciprocal Rank Fusion, with embeddings computed once at write time so each query costs a single lookup. Auth resolves entirely at the edge from a signed JWT with zero database calls, and per-user, timezone-aware digests are pre-computed as UTC timestamps and fired by pg_cron, which sidesteps Vercel's single-schedule limit.",
     shots: [
       {
         src: "/media/bookmarx-chat.png",
@@ -230,6 +244,10 @@ export const projects: Project[] = [
     mark: "/media/vordi-mark.png",
     tagline: "Voice to text that remembers.",
     status: { label: "Live", live: true },
+    cardSummary:
+      "A free, open-source macOS dictation app that keeps a private memory of everything you said.",
+    tags: ["macOS", "Swift", "Local-first AI"],
+    coverTint: { from: "0.42 0.13 285", to: "0.22 0.06 288" },
     href: "https://vordi.site",
     hrefLabel: "vordi.site",
     secondary: {
@@ -238,6 +256,8 @@ export const projects: Project[] = [
     },
     what:
       "A free, open-source macOS voice-typing app, my answer to WisprFlow and Superwhisper. Hold fn, speak into any app, and a Dynamic Notch streams your speech through Groq, OpenAI, or a local Whisper, then cleans and rewrites it before injecting the text. Pure Swift and SwiftUI, no Electron. It also keeps a private, on-device memory of everything you said. I have dictated 142,000 words through it.",
+    systemDesign:
+      "Local-first by default. Speech is routed to the right engine per language: Groq for fast English, OpenAI for Hinglish and multilingual, or a fully local Whisper, followed by an LLM cleanup and rewrite pass. A private, on-device memory built on SQLite FTS5 plus local embeddings powers a small RAG layer, so you can ask questions over everything you have ever dictated and get answers with cited sources. It is pure Swift and SwiftUI, no Electron; cloud keys are yours to bring, and local LLMs through LM Studio or Ollama are a first-class fallback rather than an afterthought.",
     stack: [
       "Swift",
       "SwiftUI",
@@ -284,11 +304,17 @@ export const projects: Project[] = [
     mark: "/media/challengers-mark.png",
     tagline: "Push your limits. Bet on yourself.",
     status: { label: "Live", live: true },
+    cardSummary:
+      "A social habit tracker where you build streaks through friendly competition and photo proof.",
+    tags: ["PWA", "Real-time", "Gamification"],
+    coverTint: { from: "0.6 0.16 30", to: "0.4 0.13 25" },
     href: "https://challengers-theta.vercel.app",
     hrefLabel: "Live demo",
     secondary: { href: "https://github.com/Raunaks068619/challengers", label: "GitHub" },
     what:
       "A social habit tracker built on friendly competition. Join or create challenges, log every day with photo proof, climb consistency-based leaderboards, and chat with the group in real time. A Next.js 16 PWA with web push and AI-assisted check-in verification.",
+    systemDesign:
+      "Firestore is the single source of truth for app data, while Supabase Postgres exists only to host the pg_cron jobs that POST back to the Next.js API on a schedule, and Supabase Storage holds the photo proofs. Redis backs per-user rate limiting across every endpoint, returning 429 with Retry-After when limits are crossed. FCM tokens live as a capped array, max five with the oldest pruned, so notifications reach a user's latest devices without stale tokens piling up. Cron idempotency is enforced by checking the day against a points_history array rather than a separate runs table, keeping the data model simple and transaction-free.",
     stack: [
       "Next.js 16",
       "TypeScript",
@@ -324,6 +350,10 @@ export const projects: Project[] = [
   },
 ];
 
+export function getProject(slug: string): Project | undefined {
+  return projects.find((p) => p.slug === slug);
+}
+
 /* A smaller third project, framed as open-source craft. */
 export const sideProject = {
   name: "design-taste",
@@ -331,6 +361,10 @@ export const sideProject = {
   href: "https://github.com/Raunaks068619/design-taste",
   hrefLabel: "github.com/Raunaks068619/design-taste",
   image: "/media/design-taste-og.png",
+  cardSummary:
+    "My preferences on spacing, color, and type, encoded as craft principles an agent can follow.",
+  tags: ["Open source", "AI tooling"],
+  coverTint: { from: "0.5 0.09 200", to: "0.28 0.06 215" },
   what:
     "AI writes good code and mediocre design. design-taste is the system I built over a few months to fix that: my preferences on spacing, color, and type, encoded as craft principles an agent can actually follow. Open source.",
 };

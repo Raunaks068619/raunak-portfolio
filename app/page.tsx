@@ -2,6 +2,7 @@ import Nav from "@/components/ui/Nav";
 import RevealObserver from "@/components/ui/RevealObserver";
 import Hero from "@/components/sections/Hero";
 import Work from "@/components/sections/Work";
+import GitGraph from "@/components/sections/GitGraph";
 import Projects from "@/components/sections/Projects";
 import Writing from "@/components/sections/Writing";
 import Build from "@/components/sections/Build";
@@ -15,6 +16,7 @@ export default function Home() {
       <main>
         <Hero />
         <Work />
+        <GitGraph />
         <Projects />
         <Writing />
         <Build />
